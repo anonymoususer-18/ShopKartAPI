@@ -1,0 +1,5 @@
+# Only what is DIFFERENT in production
+app:
+  environment: production
+  debug: false
+  log_level: INFO

@@ -1,0 +1,44 @@
+### VS Code "REST Client" extension. Start first:  python run.py
+@base = http://127.0.0.1:8000
+
+### Health
+GET {{base}}/health
+
+### Products
+GET {{base}}/api/v1/products?category=electronics
+
+### Price quote with coupon (does not change stock)
+POST {{base}}/api/v1/cart/quote
+Content-Type: application/json
+
+{"items": [{"product_id": 101, "quantity": 1}, {"product_id": 104, "quantity": 1}], "coupon_code": "FEST20"}
+
+### Place an order -> 201
+POST {{base}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "customer_email": "priya@example.com",
+  "address": {"name": "Priya Sharma", "city": "Bengaluru", "pincode": "560001", "phone": "9876543210"},
+  "items": [{"product_id": 101, "quantity": 2}],
+  "coupon_code": "WELCOME10"
+}
+
+### Track the order (use the order_id you got above)
+GET {{base}}/api/v1/orders/SK-1001
+
+### Out of stock -> 409
+POST {{base}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "customer_email": "rahul@example.com",
+  "address": {"name": "Rahul", "city": "Pune", "pincode": "411001", "phone": "9123456780"},
+  "items": [{"product_id": 103, "quantity": 1}]
+}
+
+### Bad data -> 422
+POST {{base}}/api/v1/orders
+Content-Type: application/json
+
+{"customer_email": "not-an-email", "address": {"name": "R", "city": "Pune", "pincode": "0123", "phone": "12345"}, "items": []}

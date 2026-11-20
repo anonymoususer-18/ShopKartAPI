@@ -1,0 +1,21 @@
+# ShopKart capstone - base settings (development defaults)
+app:
+  name: ShopKart Order API
+  environment: development
+  debug: true
+  log_level: DEBUG
+
+store:
+  currency: INR
+  gst_percent: 18
+  free_shipping_above: 999
+  shipping_fee: 49
+  max_qty_per_item: 10
+
+coupons:
+  - code: WELCOME10
+    discount_percent: 10
+    min_cart_value: 0
+  - code: FEST20
+    discount_percent: 20
+    min_cart_value: 1500
